@@ -20,7 +20,9 @@ module.exports = {
       image: {
         type: Sequelize.DATE,
       },
-
+      name: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
