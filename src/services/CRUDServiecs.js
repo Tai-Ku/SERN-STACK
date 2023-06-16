@@ -90,4 +90,29 @@ let putUpdateUser = (data) => {
     }
   });
 };
-module.exports = { createNewUser, getAllUsers, getUserInfoById, putUpdateUser };
+
+let deleteUserById = (userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await db.User.findOne({
+        where: { id: userId },
+      });
+      if (user) {
+        await user.destroy();
+        let allUsers = await db.User.findAll();
+        resolve(allUsers);
+      } else {
+        resolve({});
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+module.exports = {
+  createNewUser,
+  getAllUsers,
+  getUserInfoById,
+  putUpdateUser,
+  deleteUserById,
+};

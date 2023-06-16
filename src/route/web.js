@@ -6,6 +6,7 @@ import {
   displayGetCRUD,
   getEditCRUD,
   getUpdateCRUD,
+  getDeleteCRUD,
 } from "../controllers/homecontroller";
 let router = express.Router();
 
@@ -16,6 +17,7 @@ let initWebRoutes = (app) => {
   router.get("/get-crud", displayGetCRUD);
   router.get("/edit-crud", getEditCRUD);
   router.post("/put-crud", getUpdateCRUD);
+  router.get("/delete-crud", getDeleteCRUD);
 
   return app.use("/", router);
 };
