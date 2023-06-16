@@ -1,5 +1,10 @@
 import db from "../models/index";
-import { createNewUser, getAllUsers } from "../services/CRUDServiecs";
+import {
+  createNewUser,
+  getAllUsers,
+  getUserInfoById,
+  putUpdateUser,
+} from "../services/CRUDServiecs";
 let getHomePage = async (req, res) => {
   try {
     let data = await db.User.findAll();
@@ -21,10 +26,30 @@ let displayGetCRUD = async (req, res) => {
   let data = await getAllUsers();
   return res.render("display-crud.ejs", { data: data });
 };
+
+let getEditCRUD = async (req, res) => {
+  let id = req.query.id;
+  if (id) {
+    let userData = await getUserInfoById(id);
+    console.log(userData);
+
+    return res.render("edit-crud.ejs", { userData });
+  } else {
+    return res.send("hello deit page");
+  }
+};
+
+let getUpdateCRUD = async (req, res) => {
+  let data = req.body;
+  let allUsers = await putUpdateUser(data);
+  return res.render("display-crud.ejs", { data: allUsers });
+};
 module.exports = {
   getHomePage,
   getCRUD,
   postCrud,
   displayGetCRUD,
   getAllUsers,
+  getEditCRUD,
+  getUpdateCRUD,
 };

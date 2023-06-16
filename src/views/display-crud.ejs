@@ -43,7 +43,7 @@
           <th>Email</th>
           <th>FirstName</th>
           <th>LastName</th>
-          <th>Address</th>
+          <th>Action</th>
         </tr>
 
         <% for(var i=0; i<data.length; i++) {%>
@@ -61,7 +61,13 @@
           <td>
             <%= data[i].address %>
           </td>
+          <td>
+            <a href="/edit-crud?id= <%= data[i].id %>">edit</a>
+            <a >delete</a>
+          </td>
         </tr>
+
+      
           
           <% } %>
         
