@@ -8,6 +8,8 @@ import {
   getUpdateCRUD,
   getDeleteCRUD,
 } from "../controllers/homecontroller";
+
+import { handleLogin } from "../controllers/usercontroller";
 let router = express.Router();
 
 let initWebRoutes = (app) => {
@@ -18,7 +20,7 @@ let initWebRoutes = (app) => {
   router.get("/edit-crud", getEditCRUD);
   router.post("/put-crud", getUpdateCRUD);
   router.get("/delete-crud", getDeleteCRUD);
-
+  router.post("/api/login", handleLogin);
   return app.use("/", router);
 };
 module.exports = initWebRoutes;
