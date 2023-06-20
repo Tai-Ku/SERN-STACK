@@ -4,7 +4,8 @@ import {
   getAllUsers,
   getUserInfoById,
   putUpdateUser,
-  deleteUserById,
+  deleteUserById
+  
 } from "../services/CRUDServiecs";
 let getHomePage = async (req, res) => {
   try {

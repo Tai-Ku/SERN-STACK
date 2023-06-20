@@ -32,7 +32,7 @@ let handleUser = (email, password) => {
         userData.errCode = 1;
         userData.errMessage = `your email isn't exists in your system . Plz try orther email! `;
       }
-      console.log(userData);
+
       resolve(userData);
     } catch (error) {
       reject(error);
@@ -52,9 +52,28 @@ let checkUserEmail = (userEmail) => {
   });
 };
 
-let compareUserPass = () => {
+let getAllUserServiecs = (userId) => {
   return new Promise(async (resolve, reject) => {
     try {
+      let user;
+      if (userId === "ALL") {
+        user = await db.User.findAll({
+          attributes: {
+            exclude: ["password"],
+          },
+        });
+      }
+      if (userId && (userId !== "null") & (userId !== "ALL")) {
+        user = await db.User.findOne({
+          where: {
+            id: userId,
+          },
+          attributes: {
+            exclude: ["password"],
+          },
+        });
+      }
+      resolve(user);
     } catch (error) {
       reject(error);
     }
@@ -62,4 +81,5 @@ let compareUserPass = () => {
 };
 module.exports = {
   handleUser,
+  getAllUserServiecs,
 };

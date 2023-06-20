@@ -1,4 +1,4 @@
-import { handleUser } from "../services/userServieces";
+import { handleUser, getAllUserServiecs } from "../services/userServieces";
 
 let handleLogin = async (req, res) => {
   let password = req.body.password;
@@ -6,7 +6,7 @@ let handleLogin = async (req, res) => {
   if (!email || !password) {
     return res.status(500).json({
       errCode: 1,
-      message: "Missing input paramaters",
+      errMessage: "Missing input paramaters",
     });
   }
   let userData = await handleUser(email, password);
@@ -16,6 +16,25 @@ let handleLogin = async (req, res) => {
     userData: userData.user ? userData.user : { errCode: 1 },
   });
 };
+
+let handleGetAllUser = async (req, res) => {
+  let id = req.body.id; //All Or Id
+  let users = await getAllUserServiecs(id);
+  if (id) {
+    return res.status(200).json({
+      errCode: 0,
+      errMessage: "ok",
+      userData: users,
+    });
+  } else {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "err id undifined",
+      users: [],
+    });
+  }
+};
 module.exports = {
   handleLogin,
+  handleGetAllUser,
 };
