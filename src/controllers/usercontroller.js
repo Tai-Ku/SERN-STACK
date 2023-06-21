@@ -1,4 +1,10 @@
-import { handleUser, getAllUserServiecs } from "../services/userServieces";
+import {
+  handleUser,
+  getAllUserServiecs,
+  createNewlUserServiecs,
+  deleteUserServiecs,
+  updateteUserServiecs,
+} from "../services/userServieces";
 
 let handleLogin = async (req, res) => {
   let password = req.body.password;
@@ -18,7 +24,7 @@ let handleLogin = async (req, res) => {
 };
 
 let handleGetAllUser = async (req, res) => {
-  let id = req.body.id; //All Or Id
+  let id = req.query.id; //All Or Id
   let users = await getAllUserServiecs(id);
   if (id) {
     return res.status(200).json({
@@ -34,7 +40,62 @@ let handleGetAllUser = async (req, res) => {
     });
   }
 };
+
+let handleCreateUser = async (req, res) => {
+  const data = req.body;
+  const field = [
+    "email",
+    "password",
+    "firstName",
+    "lastName",
+    "address",
+    "phonenumber",
+    "gender",
+    "roleId",
+  ];
+
+  const checkData = field.every((i) => data[i]);
+  if (checkData) {
+    const user = await createNewlUserServiecs(req.body);
+    res.status(200).json(user);
+  } else {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "Missing input parameters",
+    });
+  }
+};
+
+let handleDeleteUser = async (req, res) => {
+  const id = req.body.id;
+  if (id) {
+    const user = await deleteUserServiecs(id);
+    return res.status(200).json(user);
+  } else {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "Missing input paramaters",
+    });
+  }
+};
+
+let handleUpdateUser = async (req, res) => {
+  const data = req.body;
+
+  if (data.id) {
+    const user = await updateteUserServiecs(data);
+    return res.status(200).json(user);
+  } else {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "Missing input parameters ",
+    });
+  }
+};
 module.exports = {
   handleLogin,
   handleGetAllUser,
+  handleCreateUser,
+  handleDeleteUser,
+  handleUpdateUser,
 };
